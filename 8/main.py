@@ -1,5 +1,6 @@
 from validator import Validator, Data
 from exceptions import ValidationError
+from datetime import datetime
 
 
 def get_passport_advice(age: int) -> str | None:
@@ -24,11 +25,15 @@ def main():
         Функция выводит приветствие и рекомендации по замене паспорта, если соответствующая проверка прошла успешно.
         После приветствия запускается игра по угадыванию рандомного числа."""
 
-    j = 0
+    j = 1
+
+    start_time = datetime.now()
+
     while True:
 
         j += 1
-        print(f"{j}-ая попытка.")
+
+        last_time = datetime.now()
 
         name = input("Введите ваше имя: ")
         age = input("Введите ваш возраст: ")
@@ -39,6 +44,7 @@ def main():
             age = int(age)
         except ValueError:
             print("Возраст введен не корректно. Используйте числа.\n")
+            print(f"{j}-ая попытка.")
             continue
 
         valid = Validator()
@@ -47,6 +53,7 @@ def main():
             valid.validate(data)
         except ValidationError as ex:
             print(f"Я поймал ошибку : {ex}")
+            print(f"{j}-ая попытка.")
             continue
 
         advice = get_passport_advice(age)
@@ -57,6 +64,10 @@ def main():
         print(text)
         break
 
+    print(f"Вы ввели данные правильно с {j}-раза.")
+    print(f"Время первой попытки : {start_time}")
+    print(f"Время последней попытки : {last_time}")
+    
 
 if __name__ == '__main__':
     main()
