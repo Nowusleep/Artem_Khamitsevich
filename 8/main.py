@@ -1,6 +1,26 @@
 from validator import Validator, Data
 from exceptions import ValidationError
 from datetime import datetime
+import random
+
+
+def guess_number_game():
+    """Пользователю необходимо ввести число. Программа будет запрашивать ввести новое число,
+    пока оно не совпадет с тем, которое было рандомно сформировано программой."""
+
+    i = 0
+    number_guess = 0
+    number = random.randint(1, 5)
+    while number != number_guess:
+        number_guess = int(input("Введите число от 1 до 5: "))
+        if number_guess < number:
+            print("Число меньше загадонного. Играем дальше)")
+        elif number_guess > number:
+            print("Число больше загадонного. Играем дальше)")
+        else:
+            print("Вы угадали число!")
+        i += 1
+    print(f"Вы выиграли с {i} раза.")
 
 
 def get_passport_advice(age: int) -> str | None:
@@ -67,7 +87,9 @@ def main():
     print(f"Вы ввели данные правильно с {j}-раза.")
     print(f"Время первой попытки : {start_time}")
     print(f"Время последней попытки : {last_time}")
-    
+
+    guess_number_game()
+
 
 if __name__ == '__main__':
     main()
